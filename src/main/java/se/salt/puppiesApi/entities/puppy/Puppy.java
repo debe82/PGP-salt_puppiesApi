@@ -14,12 +14,12 @@ public class Puppy {
 
     private String breed;
     private String name;
-    private Date birthDate;
+    private String birthDate;
 
     public Puppy(String breed, String name) {
         this.breed = breed;
         this.name = name;
-        this.birthDate = new Date();
+        this.birthDate = (new Date()).toString();
     }
 
     public Puppy() {
@@ -49,11 +49,11 @@ public class Puppy {
         this.name = name;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 

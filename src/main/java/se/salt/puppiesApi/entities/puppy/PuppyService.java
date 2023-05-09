@@ -20,6 +20,20 @@ public class PuppyService {
     }
 
     public Puppy createNewPuppy(PuppyDto puppyDto) {
+        Puppy puppyToCreate = puppyRepo.getPuppyByName(puppyDto.name());
+        if (puppyToCreate != null) {
+            System.out.println("puppyToCreate.getBirthDate(): " + puppyToCreate.getBirthDate());
+            System.out.println("puppyDto.birthDate(): " + puppyDto.birthDate());
+        }
+
+        if (puppyToCreate != null && puppyToCreate.getName().equals(puppyDto.name())
+                && puppyToCreate.getBreed().equals(puppyDto.breed())
+                && puppyToCreate.getBirthDate().equals(puppyDto.birthDate())) {
+
+            return null;
+        }
+
+
         return puppyRepo.createNewPuppy(puppyDto);
     }
 
@@ -38,7 +52,7 @@ public class PuppyService {
             { puppyToUpdate.setName(puppyDto.name()); }
 
         if (puppyDto.birthDate() != null
-                && puppyDto.birthDate() != puppyToUpdate.getBirthDate())
+                && !puppyDto.birthDate().equals(puppyToUpdate.getBirthDate()))
             { puppyToUpdate.setBirthDate(puppyDto.birthDate()); }
 
         return puppyRepo.updatePuppy(puppyToUpdate);
@@ -48,5 +62,9 @@ public class PuppyService {
     public void deletePuppy(int id) {
         Puppy puppy = getPuppy(id);
         puppyRepo.deletePuppy(puppy);
+    }
+
+    public void deleteAllPuppies() {
+        puppyRepo.deleteAllPuppies();
     }
 }

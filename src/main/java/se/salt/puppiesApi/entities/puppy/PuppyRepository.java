@@ -22,6 +22,8 @@ public class PuppyRepository {
         return jpaRepo.findById(id).orElse(null);
     }
 
+    public Puppy getPuppyByName(String name) { return jpaRepo.findPuppyByName(name); }
+
     public Puppy createNewPuppy(PuppyDto puppyDto) {
         Puppy newPuppy = new Puppy(puppyDto.breed(), puppyDto.name());
         return jpaRepo.save(newPuppy);
@@ -33,5 +35,9 @@ public class PuppyRepository {
 
     public void deletePuppy(Puppy puppy) {
         jpaRepo.delete(puppy);
+    }
+
+    public void deleteAllPuppies() {
+        jpaRepo.deleteAll();
     }
 }

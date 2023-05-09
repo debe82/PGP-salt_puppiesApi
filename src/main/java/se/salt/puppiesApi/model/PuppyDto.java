@@ -5,6 +5,6 @@ import java.util.Date;
 public record PuppyDto(
         String breed,
         String name,
-        Date birthDate
+        String birthDate
 ) {
 }

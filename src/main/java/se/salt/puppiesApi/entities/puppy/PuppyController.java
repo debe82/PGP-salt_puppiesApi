@@ -60,4 +60,10 @@ public class PuppyController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping
+    ResponseEntity deleteAllPuppies() {
+        puppyService.deleteAllPuppies();
+        return ResponseEntity.noContent().build();
+    }
 }
