@@ -13,23 +13,5 @@ import static org.junit.jupiter.api.Assertions.*;
 @ActiveProfiles("test")
 class PuppyControllerTest {
 
-    @Test
-    void getAllPuppies() {
-    }
-
-    @Test
-    void getPuppy() {
-    }
-
-    @Test
-    void createNewPuppy() {
-    }
-
-    @Test
-    void updatePuppy() {
-    }
-
-    @Test
-    void deletePuppy() {
-    }
+//tested with postman
 }
