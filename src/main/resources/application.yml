@@ -24,7 +24,7 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ##      ddl-auto: update
-      ddl-auto: create
+      ddl-auto: update
     defer-datasource-initialization: true
 
 ## Logging settings

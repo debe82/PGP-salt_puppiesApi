@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/puppies")
+@CrossOrigin(origins = "http://localhost:3000")
 public class PuppyController {
 
     @Autowired
