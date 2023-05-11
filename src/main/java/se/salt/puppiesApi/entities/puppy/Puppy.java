@@ -22,6 +22,12 @@ public class Puppy {
         this.birthDate = (new Date()).toString();
     }
 
+    public Puppy(String breed, String name, String birthDate) {
+        this.breed = breed;
+        this.name = name;
+        this.birthDate = birthDate;
+    }
+
     public Puppy() {
     }
 

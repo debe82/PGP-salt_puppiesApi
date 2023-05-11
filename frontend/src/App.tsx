@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Puppy, PuppyDto, addPuppy, getPuppies, getPuppy, getPuppyImg } from './api/dataManagement';
+import { Puppy, PuppyDto, addPuppy, getPuppies, getPuppy, getPuppyImg, updatePuppy } from './api/dataManagement';
 import AddForm from './components/AddForm';
 import { puppyDto } from './helper/initializer';
 import UpdForm from './components/UpdForm';
@@ -10,36 +10,45 @@ import UpdForm from './components/UpdForm';
 function App() {
 
   const [puppyList, setPuppyList] = useState<Puppy[]>([]);
+  const [puppiesListSize, setPuppiesListSize] = useState(puppyList.length);
   const [puppy, setPuppy] = useState<Puppy>(
     {
-      id: 0,
+      puppyId: 0,
       breed: "",
       name: "",
       birthDate: ""
     }
   );
+
+  const [puppyId, setPuppyId] = useState(0);
+  const [name, setName] = useState("");
+  const [breed, setBreed] = useState("");
+  const [birthDate, setBirthDate] = useState(""); 
+
+
   const [puppyImg, setPuppyImg] = useState("");
   const [toggleDataView, setToggleDataView] = useState(false);
   const [toggleAddFormView, setToggleAddFormView] = useState(false);
   const [toggleUpdFormView, setToggleUpdFormView] = useState(false);
 
-  const addNewPuppy = async () => {
-    console.log("addNewPuppy")
+  const addNewPuppy = async (puppyDto: PuppyDto) => {
     addPuppy(puppyDto);
   }
 
+  const updPuppy = async(puppy: Puppy) => {
+    updatePuppy(puppy);
+  }
+
   const getImg =async () => {
-    console.log("getImg");
     //const img = await getPuppyImg();
     //setPuppyImg(img.urls.small);
     setPuppyImg("https://hips.hearstapps.com/hmg-prod/images/chow-chow-portrait-royalty-free-image-1652926953.jpg?crop=0.44455xw:1xh;center,top&resize=980:*");
+    return puppyImg;
   }
 
   const fetchData = async () => {
-    console.log("fetchData")
     const allPuppies = await getPuppies();
     setPuppyList(allPuppies);
-    console.log("allPuppies", allPuppies);
   }
 
   const handleShowPuppy = () => {
@@ -47,18 +56,35 @@ function App() {
   } 
 
   const handleShowAddFrom = () => {
-    setToggleAddFormView(true);
+    setToggleAddFormView(!toggleAddFormView);
   }
 
   const handleShowUpdFrom = () => {
-    setToggleUpdFormView(true);
+    setToggleUpdFormView(!toggleUpdFormView);
+  }
+  const handleAddSubmit = (e: any) => {
+    e.preventDefault();
+    puppyDto.breed = breed;
+    puppyDto.name = name;
+    puppyDto.birthDate = birthDate;
+    addNewPuppy(puppyDto);
+  }
+
+  const handleUpdSubmit = (e: any) => {
+    e.preventDefault();
+    puppy.puppyId = puppyId;
+    puppy.breed = breed;
+    puppy.name = name;
+    puppy.birthDate = birthDate;
+    console.log(puppy);
+    updPuppy(puppy);
+    setPuppiesListSize(JSON.parse(JSON.stringify([...puppyList,puppiesListSize])));
   }
 
   useEffect(() => {
-    console.log("userEffect")
     fetchData();
     getImg();
-  }, []);
+  }, [puppyList]);
 
   return (
     <>
@@ -68,35 +94,68 @@ function App() {
       <section className='puppies_section'>
       <h1 className='puppies-h1_title'>List of puppies available:</h1>
       <button className='btn-add' onClick={() => { handleShowAddFrom(); }}>Add new puppy!</button>
+
         {toggleAddFormView ? 
-                    <AddForm />
+                    <section className='section-add-puppy'>
+                       <form onSubmit={handleAddSubmit}>
+                        <label className='puppy_label'>Name: </label>
+                        <input className='puppy-input' type='text' placeholder="name" onChange={(event) => {
+                          setName(event.target.value);}}/>
+                        <label className='puppy_label'>Breed: </label>
+                        <input className='puppy-input' type='text' placeholder="Breed" onChange={(event) => {
+                          setBreed(event.target.value);}}/>
+                        <label className='puppy_label'>Birth date: </label>
+                        <input className='puppy-input' type='text' placeholder="BirthDate" onChange={(event) => {
+                          setBirthDate(event.target.value);}}/>
+                        <section className='section-buttons'>
+                          <button className='btn-add-puppy'>Add puppy!</button>
+                          <button className='btn-cancel' onClick={() => { handleShowAddFrom(); }}>Cancel</button >
+                        </section>
+                      </form>
+                    </section>
                     : null
         }
 
         <section className='puppies-puppieslist'>
           {puppyList.map((p: Puppy, index: number) => {
             return (
-            <section className='puppy-container' >
+            <section key={index} className='puppy-container' >
               <img className='puppies-puppieslist_img' src={puppyImg} onClick={() => { handleShowPuppy(); }}/>
               {toggleDataView ?
-                <article className='puppies-puppieslist_data'>
+                <article className='puppies-puppieslist_data'>               
                   <p>
-                    <label className='puppies-puppieslist_data_label'>Name: </label> {p.name}
+                    <label className='puppy_label'>Name: </label> {p.name}
                   </p>
                   <p>
-                    <label className='puppies-puppieslist_data_label'>Breed</label> {p.breed}
+                    <label className='puppy_label'>Breed: </label> {p.breed}
                   </p>
                   <p>
-                    <label className='puppies-puppieslist_data_label'>BirthDate</label> {p.birthDate}
+                    <label className='puppy_label'>Birth date: </label> {p.birthDate}
                   </p>
                   <button className='btn-upd' onClick={() => { handleShowUpdFrom(); }}>Edit puppy</button>
+
                   {toggleUpdFormView ? 
-                    <UpdForm />
+                    <section className='section-edit-puppy'>
+                      <form onSubmit={handleUpdSubmit}>
+                        <label className='puppy_label'>Name: </label>
+                        <input className='puppy-input' type='text'  onChange={(e) => {setName(e.target.value)}}/>
+                        <label className='puppy_label'>Breed: </label>
+                        <input className='puppy-input' type='text'  onChange={(e) => {setBreed(e.target.value)}}/>
+                        <label className='puppy_label'>Birth date: </label>
+                        <input className='puppy-input' type='text'  onChange={(e) => {setBirthDate(e.target.value)}}/>
+                        <section className='section-buttons'>
+                          <button className='btn-edit-puppy' onClick={() => {setPuppyId(p.puppyId)}}>Confirm</button>
+                          <button className='btn-cancel' onClick={() => { handleShowUpdFrom(); }}>Cancel</button >
+                        </section>
+                        </form>
+                    </section>
                     : null
                   }
+
                 </article>
                 : null
               }
+
             </section>
             );
           })}

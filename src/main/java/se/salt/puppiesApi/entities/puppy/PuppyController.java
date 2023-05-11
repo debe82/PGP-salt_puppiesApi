@@ -44,6 +44,8 @@ public class PuppyController {
 
     @PutMapping("{id}")
     ResponseEntity<Puppy> updatePuppy(@PathVariable int id, @RequestBody PuppyDto puppyDto, HttpServletRequest req) {
+        System.out.println("id: " + id);
+        System.out.println("dto: " + puppyDto);
         if (id < 1) return ResponseEntity.badRequest().build();
         Puppy puppyToUpdate = puppyService.updatePuppy(id, puppyDto);
         if(puppyToUpdate == null) return ResponseEntity.notFound().build();

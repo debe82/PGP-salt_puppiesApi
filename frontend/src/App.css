@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
   background-color: rgb(184, 218, 218);
@@ -19,6 +20,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  align-self: center;
 }
 
 .puppies-h1_title {
@@ -29,21 +31,40 @@
   margin-bottom: 5px;
 }
 
-.btn-upd {
-  margin-bottom: 5px;
+
+.section-add-puppy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-right: 2px;
+  max-width: 70vw;
+  border-bottom: #282c34;
+  margin: 10px;
+}
+
+.section-edit-puppy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-right: 2px;
+  max-width: 70vw;
+  border-bottom: #282c34;
+  margin: 10px;
 }
 
 .puppies-puppieslist {
   align-items:center;
   max-height: 80vh;
-  min-width: 80vw;
+  min-width: 60vw;
   overflow-y: scroll;
   align-items: center;
 }
 
 .puppy-container {
-  max-height: 80vh;
-  max-width: 50vw;
+  max-height: 150vh;
+  max-width: 70vw;
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -51,48 +72,32 @@
 .puppies-puppieslist_img {
   padding: 0;
   margin-top: 0;
-  max-width: 80vw;
+  max-width: 50vw;
   border-radius: 5%;
 }
 
 .puppies-puppieslist_data {
-  margin-top: 45px;
+  margin-top: 30px;
   min-width: 50vw;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
   border-bottom: #465c5a solid;
 }
 
-.puppies-puppieslist_data_label {
+.puppy_label {
+  width: 200px;
+  display: inline;
   font-weight: bold;
 }
 
-.App-link {
-  color: #61dafb;
+.puppy-input {
+  display: block;
+}
+
+.btn-upd {
+  margin-bottom: 5px;
 }
 
 @media only screen and (min-width: 900px) {
-
-  .puppies-puppieslist {
-    display: grid;
-    padding: 10px;
-    grid-gap: 10px;
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .puppies-puppieslist_img {
-    padding: 0;
-    margin: 0;
-    max-width: 40vw;
-  }
-
-  .puppies-puppieslist_img:hover {
-    transform: scale(1.2);
-  }
-  
-}
-
-
-@media only screen and (min-width: 1024px) {
 
   .puppies-puppieslist {
     display: grid;
@@ -111,8 +116,9 @@
     max-width: 20vw;
   }
 
-  .puppies-puppieslist_img:hover {
-    transform: scale(1.2);
+
+  .puppy_label {
+    display: inline;
   }
   
 }

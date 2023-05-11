@@ -25,7 +25,7 @@ public class PuppyRepository {
     public Puppy getPuppyByName(String name) { return jpaRepo.findPuppyByName(name); }
 
     public Puppy createNewPuppy(PuppyDto puppyDto) {
-        Puppy newPuppy = new Puppy(puppyDto.breed(), puppyDto.name());
+        Puppy newPuppy = new Puppy(puppyDto.breed(), puppyDto.name(), puppyDto.birthDate());
         return jpaRepo.save(newPuppy);
     }
 
