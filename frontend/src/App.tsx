@@ -42,9 +42,8 @@ function App() {
     console.log("allPuppies", allPuppies);
   }
 
-  const handleShowPuppy = (index: number) => {
+  const handleShowPuppy = () => {
     setToggleDataView(!toggleDataView);
-    setPuppy(puppyList[index]);
   } 
 
   const handleShowAddFrom = () => {
@@ -64,55 +63,45 @@ function App() {
   return (
     <>
       <div className="App">
-        <header className="App-header">Puppies Api</header>
+      <header className="App-header">Puppies Api</header>
 
-          <section className='puppies_section'>
-            <h1 className='puppies-h1_title'>List of puppies available:</h1>
-            <button className='btn-add' onClick={() => { handleShowAddFrom(); }}>Add new Puppy</button>
-            {toggleAddFormView ?
-              <AddForm />
-            : null
-            }
-            <section className='puppies-puppieslist'>
-            {puppyList.map((p: Puppy, index: number) => {
+      <section className='puppies_section'>
+      <h1 className='puppies-h1_title'>List of puppies available:</h1>
+      <button className='btn-add' onClick={() => { handleShowAddFrom(); }}>Add new puppy!</button>
+        {toggleAddFormView ? 
+                    <AddForm />
+                    : null
+        }
+
+        <section className='puppies-puppieslist'>
+          {puppyList.map((p: Puppy, index: number) => {
             return (
-              <>
-                <br />
-                  <ul className='puppies-puppieslist_ul' key={index}>
-                    <button className='puppies-puppieslist_ul_button' onClick={() => { handleShowPuppy(index); }}>
-                      <img className='puppies-puppieslist_img' src={puppyImg} />
-                    </button>
-                    {toggleDataView ?
-                        <article className='puppies-puppieslist_data'>
-                          <p>
-                            <label className='puppies-puppieslist_data_label'>Name: </label>{puppy.name}
-                          </p>
-                          <p>
-                            <label className='puppies-puppieslist_data_label'>Breed: </label>{p.breed}
-                          </p>
-                          <p>
-                            <label className='puppies-puppieslist_data_label'>BD: </label>{p.birthDate}
-                          </p>
-                          <button className='btn-upd' onClick={() => { handleShowUpdFrom(); }}>Update Puppy</button>
-                          {toggleUpdFormView ?
-                            <UpdForm />
-                            : null
-                          }
-                        </article>
-                        : null
-                      }
-                  </ul>
-              </>
+            <section className='puppy-container' >
+              <img className='puppies-puppieslist_img' src={puppyImg} onClick={() => { handleShowPuppy(); }}/>
+              {toggleDataView ?
+                <article className='puppies-puppieslist_data'>
+                  <p>
+                    <label className='puppies-puppieslist_data_label'>Name: </label> {p.name}
+                  </p>
+                  <p>
+                    <label className='puppies-puppieslist_data_label'>Breed</label> {p.breed}
+                  </p>
+                  <p>
+                    <label className='puppies-puppieslist_data_label'>BirthDate</label> {p.birthDate}
+                  </p>
+                  <button className='btn-upd' onClick={() => { handleShowUpdFrom(); }}>Edit puppy</button>
+                  {toggleUpdFormView ? 
+                    <UpdForm />
+                    : null
+                  }
+                </article>
+                : null
+              }
+            </section>
             );
           })}
-            </section> 
-
-
-          </section> 
-
-          <section>
-
-          </section>           
+          </section>
+      </section>      
 
 
       </div>
