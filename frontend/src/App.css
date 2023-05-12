@@ -97,6 +97,23 @@
   margin-bottom: 5px;
 }
 
+@media only screen and (min-width: 600px) {
+
+  .puppies-puppieslist {
+    display: grid;
+    padding: 10px;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .puppies-puppieslist_img {
+    padding: 0;
+    margin: 0;
+    max-width: 40vw;
+  }
+
+}  
+
 @media only screen and (min-width: 900px) {
 
   .puppies-puppieslist {
@@ -107,6 +124,10 @@
   }
 
   .puppy-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     max-width: 20vw;
   }
 
@@ -120,5 +141,12 @@
   .puppy_label {
     display: inline;
   }
+
+  .puppies-puppieslist_data {
+    margin-top: 30px;
+    max-width: 20px;
+    margin-bottom: 50px;
+  }
+
   
 }

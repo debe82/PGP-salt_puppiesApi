@@ -43,6 +43,7 @@ export async function addPuppy(puppy: PuppyDto) {
 
 export async function removePuppy(id: number) {
   const puppyUrl = BASE_URL + `/${id}`;
+  console.log("puppyUrl: ", puppyUrl)
   const response = await fetch(puppyUrl, {
     method: "DELETE",
   });

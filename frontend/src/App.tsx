@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Puppy, PuppyDto, addPuppy, getPuppies, getPuppy, getPuppyImg, updatePuppy } from './api/dataManagement';
+import { Puppy, PuppyDto, addPuppy, getPuppies, getPuppy, getPuppyImg, removePuppy, updatePuppy } from './api/dataManagement';
 import AddForm from './components/AddForm';
 import { puppyDto } from './helper/initializer';
 import UpdForm from './components/UpdForm';
@@ -25,9 +24,8 @@ function App() {
   const [breed, setBreed] = useState("");
   const [birthDate, setBirthDate] = useState(""); 
 
-
   const [puppyImg, setPuppyImg] = useState("");
-  const [toggleDataView, setToggleDataView] = useState(false);
+  const [toggleDataView, setToggleDataView] = useState(-1);
   const [toggleAddFormView, setToggleAddFormView] = useState(false);
   const [toggleUpdFormView, setToggleUpdFormView] = useState(false);
 
@@ -37,6 +35,10 @@ function App() {
 
   const updPuppy = async(puppy: Puppy) => {
     updatePuppy(puppy);
+  }
+
+  const deletePuppy = async (id: number) => {
+    removePuppy(id);
   }
 
   const getImg =async () => {
@@ -51,9 +53,13 @@ function App() {
     setPuppyList(allPuppies);
   }
 
-  const handleShowPuppy = () => {
-    setToggleDataView(!toggleDataView);
-  } 
+  const handleShowPuppy = (currIndex: number) => {
+    if(currIndex===toggleDataView) {
+      setToggleDataView(-1); // If it is already open, close it.
+    } else {
+      setToggleDataView(currIndex);
+    }
+  }
 
   const handleShowAddFrom = () => {
     setToggleAddFormView(!toggleAddFormView);
@@ -68,6 +74,7 @@ function App() {
     puppyDto.name = name;
     puppyDto.birthDate = birthDate;
     addNewPuppy(puppyDto);
+    setPuppiesListSize(JSON.parse(JSON.stringify([...puppyList,puppiesListSize])));
   }
 
   const handleUpdSubmit = (e: any) => {
@@ -78,13 +85,18 @@ function App() {
     puppy.birthDate = birthDate;
     console.log(puppy);
     updPuppy(puppy);
-    setPuppiesListSize(JSON.parse(JSON.stringify([...puppyList,puppiesListSize])));
+  }
+
+  const handleDelete = () => {
+    //e.preventDefault();
+    console.log("puppyId: ", puppyId);
+    deletePuppy(puppyId);
   }
 
   useEffect(() => {
     fetchData();
     getImg();
-  }, [puppyList]);
+  }, [puppiesListSize]);
 
   return (
     <>
@@ -120,9 +132,12 @@ function App() {
           {puppyList.map((p: Puppy, index: number) => {
             return (
             <section key={index} className='puppy-container' >
-              <img className='puppies-puppieslist_img' src={puppyImg} onClick={() => { handleShowPuppy(); }}/>
-              {toggleDataView ?
-                <article className='puppies-puppieslist_data'>               
+              <img className='puppies-puppieslist_img' src={puppyImg} onClick={() => { handleShowPuppy(index); }}/>
+              {toggleDataView == index ?
+                <article className='puppies-puppieslist_data'>    
+                  <p>
+                    <label className='puppy_label'>id: </label> {p.puppyId}
+                  </p>          
                   <p>
                     <label className='puppy_label'>Name: </label> {p.name}
                   </p>
@@ -133,8 +148,11 @@ function App() {
                     <label className='puppy_label'>Birth date: </label> {p.birthDate}
                   </p>
                   <button className='btn-upd' onClick={() => { handleShowUpdFrom(); }}>Edit puppy</button>
-
+                  <button className='btn-delete-puppy' onClick={() => {
+                    setPuppyId(p.puppyId);
+                    handleDelete();}}>Delete</button>
                   {toggleUpdFormView ? 
+                  <>
                     <section className='section-edit-puppy'>
                       <form onSubmit={handleUpdSubmit}>
                         <label className='puppy_label'>Name: </label>
@@ -149,6 +167,9 @@ function App() {
                         </section>
                         </form>
                     </section>
+                    <section className='section-delete-puppy'>
+                  </section>
+                  </>  
                     : null
                   }
 

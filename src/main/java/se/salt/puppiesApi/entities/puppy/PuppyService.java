@@ -27,7 +27,6 @@ public class PuppyService {
             return null;
         }
 
-
         return puppyRepo.createNewPuppy(puppyDto);
     }
 
