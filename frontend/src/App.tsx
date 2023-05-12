@@ -84,7 +84,6 @@ function App() {
     puppy.breed = breed;
     puppy.name = name;
     puppy.birthDate = birthDate;
-    console.log(puppy);
     updPuppy(puppy);
   }
 
@@ -133,7 +132,7 @@ function App() {
             return (
             <section key={index} className='puppy-container' >
               <img className='puppies-puppieslist_img' src={puppyImg} onClick={() => { handleShowPuppy(index); }}/>
-              {toggleDataView == index ?
+              {toggleDataView == index  ? 
                 <article className='puppies-puppieslist_data'>    
                   <p>
                     <label className='puppy_label'>id: </label> {p.puppyId}
