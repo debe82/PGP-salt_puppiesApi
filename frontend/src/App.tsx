@@ -26,12 +26,15 @@ function App() {
   const [birthDate, setBirthDate] = useState(""); 
 
   const [puppyImg, setPuppyImg] = useState("");
+  const [puppyImgList, setPuppyImgList] = useState<string[]>([]);
+
   const [toggleDataView, setToggleDataView] = useState(-1);
   const [toggleAddFormView, setToggleAddFormView] = useState(false);
   const [toggleUpdFormView, setToggleUpdFormView] = useState(false);
 
   const addNewPuppy = async (puppyDto: PuppyDto) => {
-    addPuppy(puppyDto);
+    const addedPuppy = await addPuppy(puppyDto);
+    setPuppyList(JSON.parse(JSON.stringify([...puppyList, addedPuppy])));
   }
 
   const updPuppy = async(puppy: Puppy) => {
@@ -43,15 +46,33 @@ function App() {
   }
 
   const getImg =async () => {
-    //const img = await getPuppyImg();
-    //setPuppyImg(img.urls.small);
+    console.log("getImg");
+
+/*     let puppiesImgResponse = new Array();
+    puppiesImgResponse = await getPuppyImg(puppiesListSize);
+
+    let puppiesImgs: string[] = [];
+
+    if (puppiesListSize != 0) {
+
+       for (let i=0; i< puppiesImgResponse.length; i ++) {
+        puppiesImgs.push(puppiesImgResponse[i].urls.small);
+      } 
+    }
+
+    setPuppyImgList(puppiesImgs); */
+
     setPuppyImg("https://hips.hearstapps.com/hmg-prod/images/chow-chow-portrait-royalty-free-image-1652926953.jpg?crop=0.44455xw:1xh;center,top&resize=980:*");
+    
+    //return puppyImgList;
     return puppyImg;
   }
 
   const fetchData = async () => {
+    console.log("fetchData");
     const allPuppies = await getPuppies();
     setPuppyList(allPuppies);
+    setPuppiesListSize(puppyList.length)
   }
 
   const handleShowPuppy = (currIndex: number) => {
@@ -69,13 +90,13 @@ function App() {
   const handleShowUpdFrom = () => {
     setToggleUpdFormView(!toggleUpdFormView);
   }
-  const handleAddSubmit = (e: any) => {
+
+  const handleAddSubmit = async (e: any) => {
     e.preventDefault();
     puppyDto.breed = breed;
     puppyDto.name = name;
     puppyDto.birthDate = birthDate;
-    addNewPuppy(puppyDto);
-    setPuppiesListSize(JSON.parse(JSON.stringify([...puppyList,puppiesListSize])));
+    addNewPuppy(puppyDto);    
   }
 
   const handleUpdSubmit = (e: any) => {
@@ -88,14 +109,15 @@ function App() {
   }
 
   const handleDelete = (id: number) => {
+    console.log("id: ", id);
     deletePuppy(id);
-    setPuppiesListSize(JSON.parse(JSON.stringify([...puppyList,puppiesListSize])));
+    setPuppy(JSON.parse(JSON.stringify(puppy)));
   }
 
   useEffect(() => {
     fetchData();
     getImg();
-  }, [puppiesListSize]);
+  }, [puppiesListSize, puppy]);
 
   return (
     <>

@@ -37,8 +37,9 @@ export async function addPuppy(puppy: PuppyDto) {
       "content-type": "application/json",
     },
   });
-  const json = (await response.json()) as { addedPuppy: PuppyDto };
-  return json.addedPuppy;
+  const json = (await response.json()) as { addedPuppy: Puppy };
+  console.log("json: ", json);
+  return json;
 }; 
 
 export async function removePuppy(id: number) {
@@ -59,12 +60,16 @@ export async function updatePuppy(puppy: Puppy) {
     headers: {
       "content-type": "application/json",
     },  });
-  const json = (await response.json()) as { addedPuppy: Puppy };
+  const json = (await response.json()) as { addedPuppy: PuppyDto };
   return json.addedPuppy;
 }; 
 
-export async function getPuppyImg() {
-  const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=1`);
+export async function getPuppyImg(count: number) {
+  console.log("getPuppyImg");
+  console.log("count: ", count);
+  //const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=1`);
+  const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=${count}`);
   const data = await response.json();
-  return data[0];
+  //return data[0];
+  return data;
 }
