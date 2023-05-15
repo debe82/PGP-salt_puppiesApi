@@ -106,6 +106,7 @@ function App() {
     puppy.name = name;
     puppy.birthDate = birthDate;
     updPuppy(puppy);
+    setPuppy(JSON.parse(JSON.stringify(puppy)));
   }
 
   const handleDelete = (id: number) => {
