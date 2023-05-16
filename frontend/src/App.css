@@ -95,7 +95,8 @@
 }
 
 .puppies-puppieslist_img {
-  max-width: 46vw;
+  height: 38vh;
+  width: 46vw;
   border-radius: 5%;
 }
 
@@ -160,7 +161,8 @@
   .puppies-puppieslist_img {
     padding: 0;
     margin: 0;
-    max-width: 40vw;
+    height: 40vh;
+    width: 40vw;
   }
 
 }  
@@ -184,9 +186,11 @@
   }
 
   .puppies-puppieslist_img {
+    vertical-align: top; 
     padding: 0;
     margin: 0;
-    max-width: 20vw;
+    width: 20vw;
+    height: 20vh;
   }
 
 

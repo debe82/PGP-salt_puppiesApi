@@ -52,15 +52,14 @@ function App() {
   const getImg =async () => {
     console.log("getImg");
 
-/*     let puppiesImgResponse = new Array();
-    console.log("puppiesListSize: ", puppiesListSize);
+/*      let puppiesImgResponse = new Array();
     puppiesImgResponse = await getPuppyImg(puppiesListSize);
 
     let puppiesImgs: string[] = [];
 
     if (puppiesListSize != 0) {
 
-       for (let i=0; i< puppiesImgResponse.length; i ++) {
+       for (let i=0; i< puppiesListSize; i ++) {
         console.log("puppiesImgResponse[i].urls.small: ", puppiesImgResponse[i].urls.small);
         puppiesImgs.push(puppiesImgResponse[i].urls.small);
       } 
@@ -70,12 +69,9 @@ function App() {
 
     return puppyImgList; */
 
-    //const img = await getPuppyImg(1);
-    //setPuppyImg(img)
     setPuppyImg("https://hips.hearstapps.com/hmg-prod/images/chow-chow-portrait-royalty-free-image-1652926953.jpg?crop=0.44455xw:1xh;center,top&resize=980:*");
-    
-    
     return puppyImg;
+
   }
 
   const fetchData = async () => {
@@ -144,11 +140,10 @@ function App() {
 
   useEffect(() => {
     fetchData();
+    console.log("puppyList length: ", puppyList.length);
+    setParameters();
     getImg();
   }, [puppiesListSize, puppy]);
-
-  console.log("toggleDataView: ",toggleDataView);
-  console.log("toggleImgView: ",toggleImgView)
 
   return (
     <>
@@ -185,7 +180,7 @@ function App() {
             return (
             <section key={index} className='puppy-container' >
               {toggleImgView ?
-                <img className='puppies-puppieslist_img' src={puppyImg} onClick={() => { handleShowPuppyData(index);}}/>
+                <img className='puppies-puppieslist_img' src={puppyImg /*puppyImgList[index]*/} onClick={() => { handleShowPuppyData(index);}}/>
                 : null
               }  
               {toggleDataView == index  ? 
