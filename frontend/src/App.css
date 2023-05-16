@@ -69,6 +69,7 @@
 
 .btn-cancel {
   border-radius: 5%;
+  margin-right: 2px;
 }
 
 .btn-cancel:hover {
@@ -101,7 +102,8 @@
 }
 
 .puppies-puppieslist_data {
-  max-width: 90vw;
+  height: 38vh;
+  width: 46vw;
   margin-bottom: 5px;
   border-radius: 5%;
 }
@@ -120,11 +122,18 @@
 .btn-upd {
   border-radius: 5%;
   margin-bottom: 5px;
+  margin: 2px;
 }
 
 .btn-upd:hover {
   background-color: #7ca2a7;
   cursor: pointer;
+}
+
+.btn-delete-puppy {
+  border-radius: 5%;
+  margin-bottom: 5px;
+  margin: 2px;
 }
 
 .btn-delete-puppy:hover {
@@ -141,7 +150,15 @@
   margin-bottom: 5px;
 }
 
+.btn-edit-puppy {
+  border-radius: 5%;
+  margin-bottom: 5px;
+}
 
+.btn-edit-puppy:hover {
+  background-color: #7ca2a7;
+  cursor: pointer;
+}
 
 @media only screen and (min-width: 600px) {
 
@@ -163,6 +180,13 @@
     margin: 0;
     height: 40vh;
     width: 40vw;
+  }
+
+  .puppies-puppieslist_data {
+    height: 40vh;
+    width: 40vw;
+    margin-bottom: 5px;
+    border-radius: 5%;
   }
 
 }  
@@ -190,7 +214,14 @@
     padding: 0;
     margin: 0;
     width: 20vw;
-    height: 20vh;
+    height: 40vh;
+  }
+
+  .puppies-puppieslist_data {
+    width: 20vw;
+    height: 40vh;
+    margin-bottom: 5px;
+    border-radius: 5%;
   }
 
 

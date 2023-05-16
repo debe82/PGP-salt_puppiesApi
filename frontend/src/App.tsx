@@ -31,7 +31,7 @@ function App() {
   const [toggleDataView, setToggleDataView] = useState(-1);
   const [toggleAddFormView, setToggleAddFormView] = useState(false);
   const [toggleUpdFormView, setToggleUpdFormView] = useState(false);
-  const [toggleImgView, setToggleImgView] = useState(true)
+  const [toggleImgView, setToggleImgView] = useState(-1)
 
 
   const addNewPuppy = async (puppyDto: PuppyDto) => {
@@ -88,21 +88,33 @@ function App() {
   }
 
   const handleShowPuppyData = (currIndex: number) => {
+    
     if(currIndex===toggleDataView) {
       setToggleDataView(-1);
     } else {
       setToggleDataView(currIndex);
-      //setToggleImgView(false);
+      setToggleImgView(currIndex);
     }
+    setToggleUpdFormView(false)
+    console.log("handleShowPuppyData.toggleImgView: ", toggleImgView);
+    console.log("handleShowPuppyData.toggleDataView: ", toggleDataView);
   }
 
-  const handleShowImg = () => {
- //   setToggleImgView(!toggleImgView)
- ///   setToggleDataView(-1);
+  const handleShowImg = (currIndex: number) => {
+    
+    if(currIndex===toggleImgView) {
+      setToggleImgView(-1);
+      setToggleDataView(-1);
+    } else {
+      setToggleImgView(currIndex);
+    }
+    setToggleUpdFormView(false)
+    console.log("handleShowImg.toggleImgView: ", toggleImgView);
+    console.log("handleShowImg.toggleDataView: ", toggleDataView);
   }
 
   const handleSwitch = (index: number) => {
-    handleShowImg();
+    //handleShowImg();
     handleShowPuppyData(index);
   }
 
@@ -110,8 +122,19 @@ function App() {
     setToggleAddFormView(!toggleAddFormView);
   }
 
-  const handleShowUpdFrom = () => {
+  const handleShowUpdForm = (currIndex: number) => {
     setToggleUpdFormView(!toggleUpdFormView);
+    
+/*     if(currIndex===toggleImgView) {
+      setToggleUpdFormView(currIndex);
+    } else {
+      setToggleUpdFormView(-1);
+    }  
+
+    console.log("handleShowUpdForm.toggleImgView: ", toggleImgView);
+    console.log("handleShowUpdForm.toggleDataView: ", toggleDataView);
+    console.log("handleShowUpdForm.!toggleUpdFormView: ", toggleUpdFormView);
+ */
   }
 
 
@@ -179,12 +202,15 @@ function App() {
           {puppyList.map((p: Puppy, index: number) => {
             return (
             <section key={index} className='puppy-container' >
-              {toggleImgView ?
+              {toggleImgView != index ?
                 <img className='puppies-puppieslist_img' src={puppyImg /*puppyImgList[index]*/} onClick={() => { handleShowPuppyData(index);}}/>
                 : null
               }  
               {toggleDataView == index  ? 
-                <section className='puppies-puppieslist_data' onClick={() => { handleShowImg();}}>    
+                <section className='puppies-puppieslist_data' >    
+                  <p onClick={() => { handleShowImg(index);}}>
+                    <br/>
+                    <br/>
                     <label className='puppy_label'>id: </label> {p.puppyId}
                     <br/>
                     <label className='puppy_label'>Name: </label> {p.name}
@@ -193,11 +219,14 @@ function App() {
                     <br/>
                     <label className='puppy_label'>Birth date: </label> {p.birthDate}
                     <br/>
-                    <button className='btn-upd' onClick={() => { 
-                      handleShowUpdFrom();
-                      }}>Edit</button>
-                    <button className='btn-delete-puppy' onClick={() => {
-                      handleDelete(p.puppyId);}}>Delete</button>
+                  </p>  
+                  <button className='btn-upd' onClick={() => { 
+                    handleShowUpdForm(index);
+                    }}>Edit</button>
+                  <button className='btn-delete-puppy' onClick={() => {
+                    handleDelete(p.puppyId);}}>Delete</button>
+                  <br/>
+                  <br/>
 
                   {toggleUpdFormView ? 
                   <>
@@ -211,7 +240,7 @@ function App() {
                         <input className='puppy-input' type='text'  onChange={(e) => {setBirthDate(e.target.value)}}/>
                         <section className='section-buttons'>
                           <button className='btn-edit-puppy' onClick={() => {setPuppyId(p.puppyId)}}>Confirm</button>
-                          <button className='btn-cancel' onClick={() => { handleShowUpdFrom(); }}>Cancel</button >
+                          <button className='btn-cancel' onClick={() => { handleShowUpdForm(index); }}>Cancel</button >
                         </section>
                         </form>
                     </section>
