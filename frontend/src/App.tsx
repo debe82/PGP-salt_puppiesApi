@@ -46,7 +46,8 @@ function App() {
 
   const deletePuppy = async (id: number) => {
     removePuppy(id);
-    setPuppyList(JSON.parse(JSON.stringify([puppyList]))); //qualcosa qui non mi fa rirenderizzare i dati
+    const updatedPuppiesList = puppyList.filter((p) => p.puppyId != id);
+    setPuppyList(JSON.parse(JSON.stringify(updatedPuppiesList))); //qualcosa qui non mi fa rirenderizzare i dati
   }
 
   const getImg =async () => {
@@ -77,14 +78,11 @@ function App() {
   const fetchData = async () => {
     console.log("fetchData");
     const allPuppies = await getPuppies();
-    console.log("allPuppies: ",allPuppies);
     setPuppyList(allPuppies);
   }
 
   const setParameters = async() => {
-    console.log("puppyList: ", puppyList);
     setPuppiesListSize(puppyList.length)
-    console.log("puppiesListSize: ", puppiesListSize);
   }
 
   const handleShowPuppyData = (currIndex: number) => {
@@ -96,8 +94,6 @@ function App() {
       setToggleImgView(currIndex);
     }
     setToggleUpdFormView(false)
-    console.log("handleShowPuppyData.toggleImgView: ", toggleImgView);
-    console.log("handleShowPuppyData.toggleDataView: ", toggleDataView);
   }
 
   const handleShowImg = (currIndex: number) => {
@@ -109,32 +105,15 @@ function App() {
       setToggleImgView(currIndex);
     }
     setToggleUpdFormView(false)
-    console.log("handleShowImg.toggleImgView: ", toggleImgView);
-    console.log("handleShowImg.toggleDataView: ", toggleDataView);
-  }
-
-  const handleSwitch = (index: number) => {
-    //handleShowImg();
-    handleShowPuppyData(index);
   }
 
   const handleShowAddFrom = () => {
     setToggleAddFormView(!toggleAddFormView);
   }
 
-  const handleShowUpdForm = (currIndex: number) => {
+  const handleShowUpdForm = () => {
     setToggleUpdFormView(!toggleUpdFormView);
     
-/*     if(currIndex===toggleImgView) {
-      setToggleUpdFormView(currIndex);
-    } else {
-      setToggleUpdFormView(-1);
-    }  
-
-    console.log("handleShowUpdForm.toggleImgView: ", toggleImgView);
-    console.log("handleShowUpdForm.toggleDataView: ", toggleDataView);
-    console.log("handleShowUpdForm.!toggleUpdFormView: ", toggleUpdFormView);
- */
   }
 
 
@@ -159,11 +138,11 @@ function App() {
 
   const handleDelete = (id: number) => {
     deletePuppy(id);
+    console.log("puppyList: ", puppyList);
   }
 
   useEffect(() => {
     fetchData();
-    console.log("puppyList length: ", puppyList.length);
     setParameters();
     getImg();
   }, [puppiesListSize, puppy]);
@@ -221,7 +200,7 @@ function App() {
                     <br/>
                   </p>  
                   <button className='btn-upd' onClick={() => { 
-                    handleShowUpdForm(index);
+                    handleShowUpdForm();
                     }}>Edit</button>
                   <button className='btn-delete-puppy' onClick={() => {
                     handleDelete(p.puppyId);}}>Delete</button>
@@ -240,7 +219,7 @@ function App() {
                         <input className='puppy-input' type='text'  onChange={(e) => {setBirthDate(e.target.value)}}/>
                         <section className='section-buttons'>
                           <button className='btn-edit-puppy' onClick={() => {setPuppyId(p.puppyId)}}>Confirm</button>
-                          <button className='btn-cancel' onClick={() => { handleShowUpdForm(index); }}>Cancel</button >
+                          <button className='btn-cancel' onClick={() => { handleShowUpdForm(); }}>Cancel</button >
                         </section>
                         </form>
                     </section>
