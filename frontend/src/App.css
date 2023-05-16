@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Mogra&display=swap');
 
 .App {
   text-align: center;
@@ -5,14 +6,19 @@
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 10vh;
+  background-color: #7ca2a7;
+  /*background-image: url( "../Assets/puppiesBG.jpg");*/
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 15vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  font-size: calc(10px + 9vmin);
+  color: black;
+  font-family: 'Mogra', cursive;
+  font-weight: bolder;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .puppies_section {
@@ -24,13 +30,19 @@
 }
 
 .puppies-h1_title {
+
   margin: 2px;
 }
 
 .btn-add {
   margin-bottom: 5px;
+  border-radius: 5%;
 }
 
+.btn-add:hover {
+  background-color: #7ca2a7;
+  cursor: pointer;
+}
 
 .section-add-puppy {
   display: flex;
@@ -38,55 +50,59 @@
   align-items: center;
   flex-direction: column;
   padding-right: 2px;
-  max-width: 70vw;
-  border-bottom: #282c34;
+  min-width: 46vw;
   margin: 10px;
+  background-color: #7ca2a7;
+  border-radius: 10px;
+  padding-bottom: 5px;
 }
 
-.section-edit-puppy {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  padding-right: 2px;
-  max-width: 70vw;
-  border-bottom: #282c34;
-  margin: 10px;
+.btn-add-puppy {
+  border-radius: 5%;
+  margin-right: 2px;
+}
+
+.btn-add-puppy:hover {
+  background-color: #7ca2a7;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  border-radius: 5%;
+}
+
+.btn-cancel:hover {
+  background-color: #7ca2a7;
+  cursor: pointer;
 }
 
 .puppies-puppieslist {
   align-items:center;
   max-height: 80vh;
-  min-width: 60vw;
+  min-width: 46vw;
   overflow-y: scroll;
   align-items: center;
 }
 
 .puppy-container {
   max-height: 150vh;
-  max-width: 70vw;
+  max-width: 46vw;
   margin-top: 5px;
   margin-bottom: 5px;
   border-radius: 5%;
+  cursor: pointer;
+  background-color: #7ca2a7;
 }
-
-.puppy-container:hover {
-  background-color: rgb(150, 200, 200);
-}
-
 
 .puppies-puppieslist_img {
-  padding: 0;
-  margin-top: 0;
-  max-width: 50vw;
+  max-width: 46vw;
   border-radius: 5%;
 }
 
 .puppies-puppieslist_data {
-  margin-top: 10px;
-  min-width: 50vw;
-  margin-bottom: 10px;
-
+  max-width: 90vw;
+  margin-bottom: 5px;
+  border-radius: 5%;
 }
 
 .puppy_label {
@@ -96,14 +112,42 @@
 }
 
 .puppy-input {
+  width: 120px;
   display: block;
 }
 
 .btn-upd {
+  border-radius: 5%;
   margin-bottom: 5px;
 }
 
+.btn-upd:hover {
+  background-color: #7ca2a7;
+  cursor: pointer;
+}
+
+.btn-delete-puppy:hover {
+  background-color: #7ca2a7;
+  cursor: pointer;
+}
+
+.section-edit-puppy {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+
+
 @media only screen and (min-width: 600px) {
+
+  .section-add-puppy {
+    min-width: 20vw;
+  }
+
 
   .puppies-puppieslist {
     display: grid;
@@ -136,7 +180,7 @@
     align-items: center;
     flex-direction: column;
     max-width: 20vw;
-  
+    
   }
 
   .puppies-puppieslist_img {
@@ -154,7 +198,4 @@
     margin-top: 0;
   }
 
-  p {
-    align-items: center;
-  }
 }
