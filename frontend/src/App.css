@@ -5,9 +5,8 @@
   background-color: rgb(184, 218, 218);
 }
 
-.App-header {
+.app-header {
   background-color: #7ca2a7;
-  /*background-image: url( "../Assets/puppiesBG.jpg");*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -30,7 +29,6 @@
 }
 
 .puppies-h1_title {
-
   margin: 2px;
 }
 
@@ -79,33 +77,35 @@
 
 .puppies-puppieslist {
   align-items:center;
-  max-height: 80vh;
+  min-height: 80vh;
   min-width: 46vw;
   overflow-y: scroll;
   align-items: center;
 }
 
 .puppy-container {
-  max-height: 150vh;
+  max-height: 38vh;
   max-width: 46vw;
   margin-top: 5px;
   margin-bottom: 5px;
   border-radius: 5%;
   cursor: pointer;
-  background-color: #7ca2a7;
 }
 
 .puppies-puppieslist_img {
   height: 38vh;
   width: 46vw;
   border-radius: 5%;
+  object-fit:cover;
 }
 
 .puppies-puppieslist_data {
   height: 38vh;
   width: 46vw;
-  margin-bottom: 5px;
+  padding-top: 0.5%;
   border-radius: 5%;
+  font-size: 75%;
+  background-color: #7ca2a7;
 }
 
 .puppy_label {
@@ -121,8 +121,7 @@
 
 .btn-upd {
   border-radius: 5%;
-  margin-bottom: 5px;
-  margin: 2px;
+  margin: 1px;
 }
 
 .btn-upd:hover {
@@ -132,8 +131,7 @@
 
 .btn-delete-puppy {
   border-radius: 5%;
-  margin-bottom: 5px;
-  margin: 2px;
+  margin: 1px;
 }
 
 .btn-delete-puppy:hover {
@@ -160,7 +158,7 @@
   cursor: pointer;
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 550px) {
 
   .section-add-puppy {
     min-width: 20vw;
@@ -174,7 +172,6 @@
     grid-template-columns: 1fr 1fr;
   }
 
-
   .puppies-puppieslist_img {
     padding: 0;
     margin: 0;
@@ -183,15 +180,15 @@
   }
 
   .puppies-puppieslist_data {
+    font-size: 100%;
     height: 40vh;
     width: 40vw;
-    margin-bottom: 5px;
     border-radius: 5%;
   }
 
 }  
 
-@media only screen and (min-width: 900px) {
+@media only screen and (min-width: 850px) {
 
   .puppies-puppieslist {
     display: grid;
@@ -210,9 +207,8 @@
   }
 
   .puppies-puppieslist_img {
-    vertical-align: top; 
-    padding: 0;
-    margin: 0;
+    margin-bottom: 0px;
+    border-radius: 5%;
     width: 20vw;
     height: 40vh;
   }
@@ -220,7 +216,7 @@
   .puppies-puppieslist_data {
     width: 20vw;
     height: 40vh;
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     border-radius: 5%;
   }
 

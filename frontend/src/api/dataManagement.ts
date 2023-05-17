@@ -4,6 +4,7 @@ export type PuppyDto = {
   breed: string;
   name: string;
   birthDate: string;
+  imgLink: string;
 }
 
 export type Puppy = {
@@ -11,6 +12,7 @@ export type Puppy = {
   breed: string;
   name: string;
   birthDate: string;
+  imgLink: string;
 }
 
 export async function getPuppies() {
@@ -60,10 +62,9 @@ export async function updatePuppy(puppy: Puppy) {
   return json;
 }; 
 
-export async function getPuppyImg(count: number) {
+export async function getPuppyImg() {
   console.log("getPuppyImg");
-  //const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=1`);
-  const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=${count}`);
+  const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=1`);
   const data = await response.json();
   //return data[0].urls.small;
   return data;

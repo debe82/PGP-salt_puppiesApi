@@ -16,7 +16,8 @@ function App() {
       puppyId: 0,
       breed: "",
       name: "",
-      birthDate: ""
+      birthDate: "",
+      imgLink: ""
     }
   );
 
@@ -53,13 +54,13 @@ function App() {
   const getImg =async () => {
     console.log("getImg");
 
-/*      let puppiesImgResponse = new Array();
-    puppiesImgResponse = await getPuppyImg(puppiesListSize);
+    let puppiesImgResponse = new Array();
+    puppiesImgResponse = await getPuppyImg();
 
     let puppiesImgs: string[] = [];
 
     if (puppiesListSize != 0) {
-
+/*
        for (let i=0; i< puppiesListSize; i ++) {
         console.log("puppiesImgResponse[i].urls.small: ", puppiesImgResponse[i].urls.small);
         puppiesImgs.push(puppiesImgResponse[i].urls.small);
@@ -68,10 +69,12 @@ function App() {
 
     setPuppyImgList(puppiesImgs);  
 
-    return puppyImgList; */
+    return puppyImgList;  */
 
-    setPuppyImg("https://hips.hearstapps.com/hmg-prod/images/chow-chow-portrait-royalty-free-image-1652926953.jpg?crop=0.44455xw:1xh;center,top&resize=980:*");
-    return puppyImg;
+    //setPuppyImg("https://hips.hearstapps.com/hmg-prod/images/chow-chow-portrait-royalty-free-image-1652926953.jpg?crop=0.44455xw:1xh;center,top&resize=980:*");
+      setPuppyImg(puppiesImgResponse[0].urls.small);
+    }
+    return puppiesImgResponse[0].urls.small;
 
   }
 
@@ -118,11 +121,14 @@ function App() {
 
 
   const handleAddSubmit = async (e: any) => {
+    setPuppiesListSize(puppiesListSize+1);
     e.preventDefault();
     puppyDto.breed = breed;
     puppyDto.name = name;
     puppyDto.birthDate = birthDate;
+    puppyDto.imgLink = await getImg();
     addNewPuppy(puppyDto);    
+    setToggleAddFormView(!toggleAddFormView);
   }
 
   const handleUpdSubmit = (e: any) => {
@@ -136,21 +142,22 @@ function App() {
     setToggleUpdFormView(!toggleUpdFormView);
   }
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: number, currIndex: number) => {
     deletePuppy(id);
-    console.log("puppyList: ", puppyList);
+    setToggleImgView(-1);
+    setToggleDataView(-1);
   }
 
   useEffect(() => {
     fetchData();
     setParameters();
-    getImg();
+    //getImg();
   }, [puppiesListSize, puppy]);
 
   return (
     <>
       <div className="App">
-      <header className="App-header">Puppies API!</header>
+      <header className="app-header">Puppies API!</header>
 
       <section className='puppies_section'>
         <h1 className='puppies-h1_title'></h1>
@@ -182,14 +189,12 @@ function App() {
             return (
             <section key={index} className='puppy-container' >
               {toggleImgView != index ?
-                <img className='puppies-puppieslist_img' src={puppyImg /*puppyImgList[index]*/} onClick={() => { handleShowPuppyData(index);}}/>
+                <img className='puppies-puppieslist_img' src={p.imgLink /*puppyImg puppyImgList[index]*/} onClick={() => { handleShowPuppyData(index);}}/>
                 : null
               }  
               {toggleDataView == index  ? 
                 <section className='puppies-puppieslist_data' >    
-                  <p onClick={() => { handleShowImg(index);}}>
-                    <br/>
-                    <br/>
+                  <p className='p-puppy_data' onClick={() => { handleShowImg(index);}}>
                     <label className='puppy_label'>id: </label> {p.puppyId}
                     <br/>
                     <label className='puppy_label'>Name: </label> {p.name}
@@ -197,15 +202,12 @@ function App() {
                     <label className='puppy_label'>Breed: </label> {p.breed}
                     <br/>
                     <label className='puppy_label'>Birth date: </label> {p.birthDate}
-                    <br/>
                   </p>  
                   <button className='btn-upd' onClick={() => { 
                     handleShowUpdForm();
                     }}>Edit</button>
                   <button className='btn-delete-puppy' onClick={() => {
-                    handleDelete(p.puppyId);}}>Delete</button>
-                  <br/>
-                  <br/>
+                    handleDelete(p.puppyId, index);}}>Delete</button>
 
                   {toggleUpdFormView ? 
                   <>
