@@ -36,6 +36,7 @@ public class PuppyController {
 
     @PostMapping
     ResponseEntity<Puppy> createNewPuppy(@RequestBody PuppyDto puppyDto, HttpServletRequest req) {
+        System.out.println("dto: " + puppyDto);
         Puppy newPuppy = puppyService.createNewPuppy(puppyDto);
         if (newPuppy == null) return ResponseEntity.unprocessableEntity().build();
         URI location = URI.create(req.getRequestURL() + "/" + newPuppy.getPuppyId());

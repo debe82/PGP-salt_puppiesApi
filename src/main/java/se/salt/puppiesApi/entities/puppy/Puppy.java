@@ -15,17 +15,20 @@ public class Puppy {
     private String breed;
     private String name;
     private String birthDate;
+    private String imgLink;
 
-    public Puppy(String breed, String name) {
+    public Puppy(String breed, String name, String imgLink) {
         this.breed = breed;
         this.name = name;
         this.birthDate = (new Date()).toString();
+        this.imgLink = imgLink;
     }
 
-    public Puppy(String breed, String name, String birthDate) {
+    public Puppy(String breed, String name, String birthDate, String imgLink) {
         this.breed = breed;
         this.name = name;
         this.birthDate = birthDate;
+        this.imgLink = imgLink;
     }
 
     public Puppy() {
@@ -61,6 +64,14 @@ public class Puppy {
 
     public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public String getImgLink() {
+        return imgLink;
+    }
+
+    public void setImgLink(String imgLink) {
+        this.imgLink = imgLink;
     }
 
     @Override

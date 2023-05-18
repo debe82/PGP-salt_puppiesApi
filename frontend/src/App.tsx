@@ -57,25 +57,11 @@ function App() {
     let puppiesImgResponse = new Array();
     puppiesImgResponse = await getPuppyImg();
 
-    let puppiesImgs: string[] = [];
-
     if (puppiesListSize != 0) {
-/*
-       for (let i=0; i< puppiesListSize; i ++) {
-        console.log("puppiesImgResponse[i].urls.small: ", puppiesImgResponse[i].urls.small);
-        puppiesImgs.push(puppiesImgResponse[i].urls.small);
-      } 
-    }
-
-    setPuppyImgList(puppiesImgs);  
-
-    return puppyImgList;  */
-
-    //setPuppyImg("https://hips.hearstapps.com/hmg-prod/images/chow-chow-portrait-royalty-free-image-1652926953.jpg?crop=0.44455xw:1xh;center,top&resize=980:*");
       setPuppyImg(puppiesImgResponse[0].urls.small);
     }
-    return puppiesImgResponse[0].urls.small;
 
+    return puppiesImgResponse[0].urls.small;
   }
 
   const fetchData = async () => {
@@ -119,7 +105,6 @@ function App() {
     
   }
 
-
   const handleAddSubmit = async (e: any) => {
     setPuppiesListSize(puppiesListSize+1);
     e.preventDefault();
@@ -161,7 +146,7 @@ function App() {
 
       <section className='puppies_section'>
         <h1 className='puppies-h1_title'></h1>
-        <button className='btn-add' onClick={() => { handleShowAddFrom(); }}>Add new puppy!</button>
+        <button className='btn-add' onClick={() => { handleShowAddFrom(); }} >Add new puppy!</button>
 
         {toggleAddFormView ? 
           <section className='section-add-puppy'>
