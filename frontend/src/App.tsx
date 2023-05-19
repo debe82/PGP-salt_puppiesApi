@@ -4,7 +4,7 @@ import { Puppy, PuppyDto, addPuppy, getPuppies, getPuppy, getPuppyImg, removePup
 import AddForm from './components/AddForm';
 import { puppyDto } from './helper/initializer';
 import UpdForm from './components/UpdForm';
-
+import { Context } from './helper/context';
 
 function App() {
 
@@ -13,17 +13,17 @@ function App() {
 
   const [puppyId, setPuppyId] = useState(0);
   const [puppyName, setPuppyName] = useState("");
-  const [breed, setBreed] = useState("");
-  const [birthDate, setBirthDate] = useState(""); 
-  const [imgLink, setImgLink] = useState(""); 
+  const [puppyBreed, setPuppyBreed] = useState("");
+  const [puppyBD, setPuppyBD] = useState(""); 
+  const [puppyImgLink, setPuppyImgLink] = useState(""); 
 
   const [puppy, setPuppy] = useState<Puppy>(
     {
       puppyId: puppyId,
-      breed: breed,
+      breed: puppyBreed,
       name: puppyName,
-      birthDate: birthDate,
-      imgLink: imgLink
+      birthDate: puppyBD,
+      imgLink: puppyImgLink
     }
   );
 
@@ -31,12 +31,6 @@ function App() {
   const [toggleAddFormView, setToggleAddFormView] = useState(false);
   const [toggleUpdFormView, setToggleUpdFormView] = useState(-1);
   const [toggleImgView, setToggleImgView] = useState(-1)
-
-
-  const addNewPuppy = async (puppyDto: PuppyDto) => {
-    const addedPuppy = await addPuppy(puppyDto);
-    setPuppyList(JSON.parse(JSON.stringify([...puppyList, addedPuppy])));
-  }
 
   const updPuppy = async(puppy: Puppy) => {
     const updPuppy = await updatePuppy(puppy);
@@ -47,18 +41,6 @@ function App() {
     removePuppy(id);
     const updatedPuppiesList = puppyList.filter((p) => p.puppyId != id);
     setPuppyList(JSON.parse(JSON.stringify(updatedPuppiesList))); //qualcosa qui non mi fa rirenderizzare i dati
-  }
-
-  const getImg =async (breed: string) => {
-    console.log("getImg");
-    let puppiesImgResponse = new Array();
-    puppiesImgResponse = await getPuppyImg(breed);
-
-    if (puppiesListSize != 0) {
-      setImgLink(puppiesImgResponse[0].urls.small);
-    }
-    
-    return puppiesImgResponse[0].urls.small;
   }
 
   const fetchData = async () => {
@@ -109,23 +91,13 @@ function App() {
     }
   }
 
-  const handleAddSubmit = async (e: any) => {
-    e.preventDefault();
-    puppyDto.breed = breed;
-    puppyDto.name = puppyName;
-    puppyDto.birthDate = birthDate;
-    puppyDto.imgLink = await getImg(puppyDto.breed);
-    addNewPuppy(puppyDto);    
-    setToggleAddFormView(!toggleAddFormView);
-  }
-
   const handleUpdSubmit = (e: any) => {
     e.preventDefault();
 
     puppy.puppyId = puppyId;
-    puppy.breed = breed;
+    puppy.breed = puppyBreed;
     puppy.name = puppyName;
-    puppy.birthDate = birthDate;
+    puppy.birthDate = puppyBD;
     updPuppy(puppy);
     setToggleUpdFormView(-1);
   }
@@ -143,32 +115,39 @@ function App() {
 
   return (
     <>
+      <Context.Provider
+        value={{
+          puppyName,
+          setPuppyName,
+          puppyId,
+          setPuppyId,
+          puppyBreed,
+          setPuppyBreed,
+          puppyBD,
+          setPuppyBD,
+          puppyImgLink,
+          setPuppyImgLink,
+          puppyList,
+          setPuppyList,
+          puppiesListSize,
+          setPuppiesListSize,
+          toggleAddFormView,
+          setToggleAddFormView,
+      }}>
+
+
       <div className="App">
       <header className="app-header">Puppies API!</header>
 
       <section className='puppies_section'>
         <h1 className='puppies-h1_title'></h1>
         <button className='btn-add' onClick={() => { handleShowAddFrom(); }} >Add new puppy!</button>
-
+        
         {toggleAddFormView ? 
-          <section className='section-add-puppy'>
-            <form className='add_form' onSubmit={handleAddSubmit}>
-              <label className='puppy_label'>Name: </label>
-              <input className='puppy-input' type='text' placeholder="Name.." onChange={(event) => {
-                setPuppyName(event.target.value);}}/>
-              <label className='puppy_label'>Breed: </label>
-              <input className='puppy-input' type='text' placeholder="Breed.." onChange={(event) => {
-                setBreed(event.target.value);}}/>
-              <label className='puppy_label'>Birth date: </label>
-              <input className='puppy-input' type='text' placeholder="BirthDate.." onChange={(event) => {
-                setBirthDate(event.target.value);}}/>
-              <br/>  
-              <section className='section-buttons'>
-                <button className='btn-add-puppy'>Add!</button>
-                <button className='btn-cancel' onClick={() => { handleShowAddFrom(); }}>Cancel</button >
-              </section>
-            </form>
-          </section>
+        <>
+        <AddForm />
+
+          </>
           : null
         }
 
@@ -213,9 +192,9 @@ function App() {
                     <label className='puppy_label'>Name: </label>
                     <input className='puppy-input' type='text' onChange={(e) => {setPuppyName(e.target.value)}}/>
                     <label className='puppy_label'>Breed: </label>
-                    <input className='puppy-input' type='text'  onChange={(e) => {setBreed(e.target.value)}}/>
+                    <input className='puppy-input' type='text'  onChange={(e) => {setPuppyBreed(e.target.value)}}/>
                     <label className='puppy_label'>Birth date: </label>
-                    <input className='puppy-input' type='text'  onChange={(e) => {setBirthDate(e.target.value)}}/>
+                    <input className='puppy-input' type='text'  onChange={(e) => {setPuppyBD(e.target.value)}}/>
                     <section className='section-buttons'>
                       <button className='btn-edit-puppy' onClick={() => {setPuppyId(p.puppyId); setToggleDataView(index);}}>Confirm</button>
                       <button className='btn-cancel' onClick={() => { handleShowUpdForm(index); }}>Cancel</button >
@@ -236,6 +215,9 @@ function App() {
 
 
       </div>
+
+      </Context.Provider>
+
     </>
   );
 }
