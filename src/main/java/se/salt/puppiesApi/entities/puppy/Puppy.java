@@ -10,7 +10,7 @@ import java.util.Date;
 public class Puppy {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int puppyId;
+    private int id;
 
     private String breed;
     private String name;
@@ -34,12 +34,12 @@ public class Puppy {
     public Puppy() {
     }
 
-    public int getPuppyId() {
-        return puppyId;
+    public int getId() {
+        return id;
     }
 
-    public void setPuppyId(int puppyId) {
-        this.puppyId = puppyId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getBreed() {
@@ -77,7 +77,7 @@ public class Puppy {
     @Override
     public String toString() {
         return "Puppy{" +
-                "puppyId=" + puppyId +
+                "puppyId=" + id +
                 ", breed='" + breed + '\'' +
                 ", name='" + name + '\'' +
                 ", birthDate=" + birthDate +

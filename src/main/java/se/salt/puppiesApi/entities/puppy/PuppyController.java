@@ -39,7 +39,7 @@ public class PuppyController {
         System.out.println("dto: " + puppyDto);
         Puppy newPuppy = puppyService.createNewPuppy(puppyDto);
         if (newPuppy == null) return ResponseEntity.unprocessableEntity().build();
-        URI location = URI.create(req.getRequestURL() + "/" + newPuppy.getPuppyId());
+        URI location = URI.create(req.getRequestURL() + "/" + newPuppy.getId());
         return ResponseEntity.created(location).body(newPuppy);
     }
 

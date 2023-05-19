@@ -1,6 +1,6 @@
 import { Puppy, PuppyDto } from "../api/dataManagement";
   
-import { puppyDto } from "./initializer";
+import { initPuppy, puppyDto } from "./initializer";
 import {
   Dispatch,
   SetStateAction,
@@ -24,6 +24,12 @@ export interface MyContextValue {
   setPuppiesListSize: Dispatch<SetStateAction<number>>;
   toggleAddFormView: boolean;
   setToggleAddFormView: Dispatch<SetStateAction<boolean>>;
+  puppy: Puppy; 
+  setPuppy: Dispatch<SetStateAction<Puppy>>;
+  toggleDataView: number;
+  setToggleDataView: Dispatch<SetStateAction<number>>;
+  toggleUpdFormView: number;
+  setToggleUpdFormView: Dispatch<SetStateAction<number>>;
 }
 
 export const Context = createContext<MyContextValue>({
@@ -42,6 +48,13 @@ export const Context = createContext<MyContextValue>({
   puppiesListSize: 0,
   setPuppiesListSize: () => 0,
   toggleAddFormView: false,
-  setToggleAddFormView: () => false
+  setToggleAddFormView: () => false,
+  puppy: initPuppy,
+  setPuppy:() => {},
+  toggleDataView: -1,
+  setToggleDataView: () => -1,
+  toggleUpdFormView: -1,
+  setToggleUpdFormView: () => -1,
+
 });
 

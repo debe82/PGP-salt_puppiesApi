@@ -63,7 +63,7 @@ class PuppyServiceTest {
     @Order(5)
     void updatePuppy() {
         Puppy puppy = service.getPuppy(1);
-        Puppy updatedPuppy = service.updatePuppy(puppy.getPuppyId(), new PuppyDto("breedX", "name1", null));
+        Puppy updatedPuppy = service.updatePuppy(puppy.getId(), new PuppyDto("breedX", "name1", null));
 
         assertThat(updatedPuppy.getBreed()).isNotEqualTo(puppy.getBreed());
         assertThat(updatedPuppy.getName()).isEqualTo(puppy.getName());

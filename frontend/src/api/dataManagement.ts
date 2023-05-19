@@ -8,7 +8,7 @@ export type PuppyDto = {
 }
 
 export type Puppy = {
-  puppyId: number;
+  id: number;
   breed: string;
   name: string;
   birthDate: string;
@@ -49,7 +49,7 @@ export async function removePuppy(id: number) {
 };
 
 export async function updatePuppy(puppy: Puppy) {
-  const id = puppy.puppyId
+  const id = puppy.id
   console.log("id: ", id);
   const puppyUrl = BASE_URL + `/${id}`;
   const response = await fetch(puppyUrl, {

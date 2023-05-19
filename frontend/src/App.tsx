@@ -6,6 +6,8 @@ import { puppyDto } from './helper/initializer';
 import UpdForm from './components/UpdForm';
 import { Context } from './helper/context';
 
+
+
 function App() {
 
   const [puppyList, setPuppyList] = useState<Puppy[]>([]);
@@ -19,7 +21,7 @@ function App() {
 
   const [puppy, setPuppy] = useState<Puppy>(
     {
-      puppyId: puppyId,
+      id: puppyId,
       breed: puppyBreed,
       name: puppyName,
       birthDate: puppyBD,
@@ -27,19 +29,14 @@ function App() {
     }
   );
 
-  const [toggleDataView, setToggleDataView] = useState(-1);
-  const [toggleAddFormView, setToggleAddFormView] = useState(false);
-  const [toggleUpdFormView, setToggleUpdFormView] = useState(-1);
   const [toggleImgView, setToggleImgView] = useState(-1)
-
-  const updPuppy = async(puppy: Puppy) => {
-    const updPuppy = await updatePuppy(puppy);
-    setPuppy(JSON.parse(JSON.stringify(updPuppy)));
-  }
-
+  const [toggleAddFormView, setToggleAddFormView] = useState(false);
+  const [toggleDataView, setToggleDataView] = useState(-1);
+  const [toggleUpdFormView, setToggleUpdFormView] = useState(-1);
+  
   const deletePuppy = async (id: number) => {
     removePuppy(id);
-    const updatedPuppiesList = puppyList.filter((p) => p.puppyId != id);
+    const updatedPuppiesList = puppyList.filter((p) => p.id != id);
     setPuppyList(JSON.parse(JSON.stringify(updatedPuppiesList))); //qualcosa qui non mi fa rirenderizzare i dati
   }
 
@@ -91,17 +88,6 @@ function App() {
     }
   }
 
-  const handleUpdSubmit = (e: any) => {
-    e.preventDefault();
-
-    puppy.puppyId = puppyId;
-    puppy.breed = puppyBreed;
-    puppy.name = puppyName;
-    puppy.birthDate = puppyBD;
-    updPuppy(puppy);
-    setToggleUpdFormView(-1);
-  }
-
   const handleDelete = (id: number, currIndex: number) => {
     deletePuppy(id);
     setToggleImgView(-1);
@@ -133,6 +119,12 @@ function App() {
           setPuppiesListSize,
           toggleAddFormView,
           setToggleAddFormView,
+          puppy,
+          setPuppy,
+          toggleDataView,
+          setToggleDataView,
+          toggleUpdFormView,
+          setToggleUpdFormView,
       }}>
 
 
@@ -145,25 +137,24 @@ function App() {
         
         {toggleAddFormView ? 
         <>
-        <AddForm />
-
-          </>
+          <AddForm />
+        </>
           : null
         }
 
         <section className='puppies-puppieslist'>
           {puppyList.map((p: Puppy, index: number) => {
-
             return (
             <section key={index} className='puppy-container' >
               {toggleImgView != index ?
                 <img className='puppies-puppieslist_img' src={p.imgLink} onClick={() => { handleShowPuppyData(index);}} alt='A picture of a ${p.breed} named ${p.name}'/>
                 : null
               }  
+
               {toggleDataView == index  ? 
                 <section className='puppies-puppieslist_data' >    
                   <p className='p-puppy_data' onClick={() => { handleShowImg(index);}}>
-                    <label className='puppy_label'>Id:  {p.puppyId}</label>
+                    <label className='puppy_label'>Id:  {p.id}</label>
                     <br/>
                     <br/>
                     <label className='puppy_label'>Name: {p.name} </label>
@@ -179,7 +170,7 @@ function App() {
                       handleShowUpdForm(index);
                       }}>Edit</button>
                     <button className='btn-delete-puppy' onClick={() => {
-                      handleDelete(p.puppyId, index);}}>Delete</button>
+                      handleDelete(p.id, index);}}>Delete</button>
                   </section>    
                 </section>
                 : null
@@ -187,20 +178,7 @@ function App() {
 
               {toggleUpdFormView == index ? 
               <>
-                <section className='section-edit-puppy'>
-                  <form onSubmit={handleUpdSubmit}>
-                    <label className='puppy_label'>Name: </label>
-                    <input className='puppy-input' type='text' onChange={(e) => {setPuppyName(e.target.value)}}/>
-                    <label className='puppy_label'>Breed: </label>
-                    <input className='puppy-input' type='text'  onChange={(e) => {setPuppyBreed(e.target.value)}}/>
-                    <label className='puppy_label'>Birth date: </label>
-                    <input className='puppy-input' type='text'  onChange={(e) => {setPuppyBD(e.target.value)}}/>
-                    <section className='section-buttons'>
-                      <button className='btn-edit-puppy' onClick={() => {setPuppyId(p.puppyId); setToggleDataView(index);}}>Confirm</button>
-                      <button className='btn-cancel' onClick={() => { handleShowUpdForm(index); }}>Cancel</button >
-                    </section>
-                    </form>
-                </section>
+                <UpdForm id = {index}/>
               </>  
                 : null
               }
