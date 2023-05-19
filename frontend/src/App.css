@@ -33,13 +33,14 @@
 }
 
 .btn-add {
+  margin-top: 5px;
   margin-bottom: 5px;
   border-radius: 5%;
   width: 20vw;
   height: 10vh;
   font-family: 'Mogra', cursive;
-  font-weight: bolder;
   font-size: calc(10px + 2vmin);
+  background-color: rgb(184, 218, 218);
 }
 
 
@@ -67,6 +68,8 @@
 .btn-add-puppy {
   border-radius: 5%;
   margin-right: 2px;
+  font-family: 'Mogra', cursive;
+  background-color: rgb(184, 218, 218);
 }
 
 .btn-add-puppy:hover {
@@ -77,6 +80,7 @@
 .btn-cancel {
   border-radius: 5%;
   margin-right: 2px;
+  background-color: rgb(184, 218, 218);
 }
 
 .btn-cancel:hover {
@@ -90,7 +94,7 @@
   min-width: 46vw;
   overflow-y: scroll;
   align-items: center;
-
+  padding: 10px;
 }
 
 .puppy-container {
@@ -111,8 +115,11 @@
 }
 
 .puppies-puppieslist_data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   border: 1px solid #7ca2a7;
-  opacity: 100%;
   height: 38vh;
   width: 46vw;
   padding-top: 0.5%;
@@ -126,6 +133,7 @@
   width: 200px;
   display: inline;
   font-weight: bold;
+  text-align:left;
 }
 
 .puppy-input {
@@ -136,6 +144,8 @@
 .btn-upd {
   border-radius: 5%;
   margin: 1px;
+  font-family: 'Mogra', cursive;
+  background-color: rgb(184, 218, 218);
 }
 
 .btn-upd:hover {
@@ -146,6 +156,8 @@
 .btn-delete-puppy {
   border-radius: 5%;
   margin: 1px;
+  font-family: 'Mogra', cursive;
+  background-color: rgb(184, 218, 218);
 }
 
 .btn-delete-puppy:hover {
@@ -154,22 +166,36 @@
 }
 
 .section-edit-puppy {
+  height: 38vh;
+  width: 46vw;
+  padding-top: 0.5%;
+  border-radius: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   padding-bottom: 5px;
   margin-bottom: 5px;
+  border: 1px solid #7ca2a7;
 }
 
 .btn-edit-puppy {
   border-radius: 5%;
   margin-bottom: 5px;
+  font-family: 'Mogra', cursive;
+  background-color: rgb(184, 218, 218);
 }
 
 .btn-edit-puppy:hover {
   background-color: #7ca2a7;
   cursor: pointer;
+}
+
+.btn-cancel {
+  border-radius: 5%;
+  margin-bottom: 5px;
+  font-family: 'Mogra', cursive;
+  background-color: rgb(184, 218, 218);
 }
 
 @media only screen and (min-width: 550px) {
@@ -186,6 +212,14 @@
     grid-template-columns: 1fr 1fr;
   }
 
+  .puppy-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    max-width: 40vw;
+  }
+
   .puppies-puppieslist_img {
     padding: 0;
     margin: 0;
@@ -195,6 +229,12 @@
 
   .puppies-puppieslist_data {
     font-size: 100%;
+    height: 40vh;
+    width: 40vw;
+    border-radius: 5%;
+  }
+
+  .section-edit-puppy {
     height: 40vh;
     width: 40vw;
     border-radius: 5%;
@@ -217,7 +257,6 @@
     align-items: center;
     flex-direction: column;
     max-width: 20vw;
-    
   }
 
   .puppies-puppieslist_img {
@@ -232,15 +271,18 @@
     height: 40vh;
     margin-bottom: 0px;
     border-radius: 5%;
+    margin-top: 0;
+  }
+
+  .section-edit-puppy {
+    width: 20vw;
+    height: 40vh;
+    border-radius: 5%;
   }
 
 
   .puppy_label {
     display: inline;
-  }
-
-  .puppies-puppieslist_data {
-    margin-top: 0;
   }
 
 }
