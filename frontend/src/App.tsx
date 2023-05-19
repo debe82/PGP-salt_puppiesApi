@@ -11,20 +11,21 @@ function App() {
   const [puppyList, setPuppyList] = useState<Puppy[]>([]);
   const [puppiesListSize, setPuppiesListSize] = useState(puppyList.length);
 
-  const [puppy, setPuppy] = useState<Puppy>(
-    {
-      puppyId: 0,
-      breed: "",
-      name: "",
-      birthDate: "",
-      imgLink: ""
-    }
-  );
-
   const [puppyId, setPuppyId] = useState(0);
-  const [name, setName] = useState("");
+  const [puppyName, setPuppyName] = useState("");
   const [breed, setBreed] = useState("");
   const [birthDate, setBirthDate] = useState(""); 
+  const [imgLink, setImgLink] = useState(""); 
+
+  const [puppy, setPuppy] = useState<Puppy>(
+    {
+      puppyId: puppyId,
+      breed: breed,
+      name: puppyName,
+      birthDate: birthDate,
+      imgLink: imgLink
+    }
+  );
 
   const [puppyImg, setPuppyImg] = useState("");
   const [puppyImgList, setPuppyImgList] = useState<string[]>([]);
@@ -58,9 +59,9 @@ function App() {
     puppiesImgResponse = await getPuppyImg();
 
     if (puppiesListSize != 0) {
-      setPuppyImg(puppiesImgResponse[0].urls.small);
+      setPuppyImg(puppiesImgResponse[0].urls.thumb);
     }
-
+    setImgLink(puppiesImgResponse[0].urls.small);
     return puppiesImgResponse[0].urls.small;
   }
 
@@ -86,7 +87,6 @@ function App() {
   }
 
   const handleShowImg = (currIndex: number) => {
-    
     if(currIndex===toggleImgView) {
       setToggleImgView(-1);
       setToggleDataView(-1);
@@ -97,7 +97,6 @@ function App() {
   }
 
   const handleShowAddFrom = () => {
-
     setToggleAddFormView(!toggleAddFormView);
   }
 
@@ -118,7 +117,7 @@ function App() {
   const handleAddSubmit = async (e: any) => {
     e.preventDefault();
     puppyDto.breed = breed;
-    puppyDto.name = name;
+    puppyDto.name = puppyName;
     puppyDto.birthDate = birthDate;
     puppyDto.imgLink = await getImg();
     addNewPuppy(puppyDto);    
@@ -130,7 +129,7 @@ function App() {
 
     puppy.puppyId = puppyId;
     puppy.breed = breed;
-    puppy.name = name;
+    puppy.name = puppyName;
     puppy.birthDate = birthDate;
     updPuppy(puppy);
     setToggleUpdFormView(-1);
@@ -161,7 +160,7 @@ function App() {
             <form className='add_form' onSubmit={handleAddSubmit}>
               <label className='puppy_label'>Name: </label>
               <input className='puppy-input' type='text' placeholder="name" onChange={(event) => {
-                setName(event.target.value);}}/>
+                setPuppyName(event.target.value);}}/>
               <label className='puppy_label'>Breed: </label>
               <input className='puppy-input' type='text' placeholder="Breed" onChange={(event) => {
                 setBreed(event.target.value);}}/>
@@ -180,28 +179,34 @@ function App() {
 
         <section className='puppies-puppieslist'>
           {puppyList.map((p: Puppy, index: number) => {
+
             return (
             <section key={index} className='puppy-container' >
               {toggleImgView != index ?
-                <img className='puppies-puppieslist_img' src={p.imgLink /*puppyImg puppyImgList[index]*/} onClick={() => { handleShowPuppyData(index);}}/>
+                <img className='puppies-puppieslist_img' src={p.imgLink} onClick={() => { handleShowPuppyData(index);}} alt='A picture of a ${p.breed} named ${p.name}'/>
                 : null
               }  
               {toggleDataView == index  ? 
                 <section className='puppies-puppieslist_data' >    
                   <p className='p-puppy_data' onClick={() => { handleShowImg(index);}}>
-                    <label className='puppy_label'>id: </label> {p.puppyId}
+                    <label className='puppy_label'>Id:  {p.puppyId}</label>
                     <br/>
-                    <label className='puppy_label'>Name: </label>  {p.name}
                     <br/>
-                    <label className='puppy_label'>Breed: </label> {p.breed}
+                    <label className='puppy_label'>Name: {p.name} </label>
                     <br/>
-                    <label className='puppy_label'>Birth date: </label> {p.birthDate}
+                    <br/>
+                    <label className='puppy_label'>Breed: {p.breed} </label> 
+                    <br/>
+                    <br/>
+                    <label className='puppy_label'>Birth date: {p.birthDate} </label> 
                   </p>  
-                  <button className='btn-upd' onClick={() => { 
-                    handleShowUpdForm(index);
-                    }}>Edit</button>
-                  <button className='btn-delete-puppy' onClick={() => {
-                    handleDelete(p.puppyId, index);}}>Delete</button>
+                  <section className='section-buttons'>
+                    <button className='btn-upd' onClick={() => { 
+                      handleShowUpdForm(index);
+                      }}>Edit</button>
+                    <button className='btn-delete-puppy' onClick={() => {
+                      handleDelete(p.puppyId, index);}}>Delete</button>
+                  </section>    
                 </section>
                 : null
               }  
@@ -211,7 +216,7 @@ function App() {
                 <section className='section-edit-puppy'>
                   <form onSubmit={handleUpdSubmit}>
                     <label className='puppy_label'>Name: </label>
-                    <input className='puppy-input' type='text' onChange={(e) => {setName(e.target.value)}}/>
+                    <input className='puppy-input' type='text' onChange={(e) => {setPuppyName(e.target.value)}}/>
                     <label className='puppy_label'>Breed: </label>
                     <input className='puppy-input' type='text'  onChange={(e) => {setBreed(e.target.value)}}/>
                     <label className='puppy_label'>Birth date: </label>

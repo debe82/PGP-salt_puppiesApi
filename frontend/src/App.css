@@ -49,12 +49,16 @@
   cursor: pointer;
 }
 
+.add_form {
+  padding: 5px;
+}
+
 .section-add-puppy {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-right: 2px;
+  padding: 2px;
   min-width: 46vw;
   margin: 10px;
   background-color: #7ca2a7;
@@ -134,9 +138,13 @@
   display: inline;
   font-weight: bold;
   text-align:left;
+  font-weight: normal;
+  font-family: 'Mogra', cursive;
+  font-size: 150%;
 }
 
 .puppy-input {
+  margin: 5px;
   width: 120px;
   display: block;
 }
@@ -168,19 +176,17 @@
 .section-edit-puppy {
   height: 38vh;
   width: 46vw;
-  padding-top: 0.5%;
   border-radius: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 5px;
-  margin-bottom: 5px;
   border: 1px solid #7ca2a7;
 }
 
 .btn-edit-puppy {
   border-radius: 5%;
+  margin: 1px;
   margin-bottom: 5px;
   font-family: 'Mogra', cursive;
   background-color: rgb(184, 218, 218);
@@ -193,6 +199,7 @@
 
 .btn-cancel {
   border-radius: 5%;
+  margin: 1px;
   margin-bottom: 5px;
   font-family: 'Mogra', cursive;
   background-color: rgb(184, 218, 218);
