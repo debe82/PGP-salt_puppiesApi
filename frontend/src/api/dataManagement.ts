@@ -62,9 +62,9 @@ export async function updatePuppy(puppy: Puppy) {
   return json;
 }; 
 
-export async function getPuppyImg() {
+export async function getPuppyImg(breed: string) {
   console.log("getPuppyImg");
-  const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=puppy dog&count=1`);
+  const response = await fetch(`https://api.unsplash.com/photos/random/?client_id=5ujPO9yMbV51_t2f3UpCffXrecaB7-_9f85QFJqfO3U&query=${breed}&count=1`);
   const data = await response.json();
   //return data[0].urls.small;
   return data;

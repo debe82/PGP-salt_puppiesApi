@@ -27,9 +27,6 @@ function App() {
     }
   );
 
-  const [puppyImg, setPuppyImg] = useState("");
-  const [puppyImgList, setPuppyImgList] = useState<string[]>([]);
-
   const [toggleDataView, setToggleDataView] = useState(-1);
   const [toggleAddFormView, setToggleAddFormView] = useState(false);
   const [toggleUpdFormView, setToggleUpdFormView] = useState(-1);
@@ -52,16 +49,15 @@ function App() {
     setPuppyList(JSON.parse(JSON.stringify(updatedPuppiesList))); //qualcosa qui non mi fa rirenderizzare i dati
   }
 
-  const getImg =async () => {
+  const getImg =async (breed: string) => {
     console.log("getImg");
-
     let puppiesImgResponse = new Array();
-    puppiesImgResponse = await getPuppyImg();
+    puppiesImgResponse = await getPuppyImg(breed);
 
     if (puppiesListSize != 0) {
-      setPuppyImg(puppiesImgResponse[0].urls.thumb);
+      setImgLink(puppiesImgResponse[0].urls.small);
     }
-    setImgLink(puppiesImgResponse[0].urls.small);
+    
     return puppiesImgResponse[0].urls.small;
   }
 
@@ -76,7 +72,6 @@ function App() {
   }
 
   const handleShowPuppyData = (currIndex: number) => {
-    
     if(currIndex===toggleDataView) {
       setToggleDataView(-1);
     } else {
@@ -119,7 +114,7 @@ function App() {
     puppyDto.breed = breed;
     puppyDto.name = puppyName;
     puppyDto.birthDate = birthDate;
-    puppyDto.imgLink = await getImg();
+    puppyDto.imgLink = await getImg(puppyDto.breed);
     addNewPuppy(puppyDto);    
     setToggleAddFormView(!toggleAddFormView);
   }
@@ -159,13 +154,13 @@ function App() {
           <section className='section-add-puppy'>
             <form className='add_form' onSubmit={handleAddSubmit}>
               <label className='puppy_label'>Name: </label>
-              <input className='puppy-input' type='text' placeholder="name" onChange={(event) => {
+              <input className='puppy-input' type='text' placeholder="Name.." onChange={(event) => {
                 setPuppyName(event.target.value);}}/>
               <label className='puppy_label'>Breed: </label>
-              <input className='puppy-input' type='text' placeholder="Breed" onChange={(event) => {
+              <input className='puppy-input' type='text' placeholder="Breed.." onChange={(event) => {
                 setBreed(event.target.value);}}/>
               <label className='puppy_label'>Birth date: </label>
-              <input className='puppy-input' type='text' placeholder="BirthDate" onChange={(event) => {
+              <input className='puppy-input' type='text' placeholder="BirthDate.." onChange={(event) => {
                 setBirthDate(event.target.value);}}/>
               <br/>  
               <section className='section-buttons'>
